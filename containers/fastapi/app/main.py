@@ -2,18 +2,27 @@ from fastapi import FastAPI
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 import pandas as pd
-import pickle
+#import pickle
+import joblib
 
-
-with open("/opt/static/estimated.sav", "rb") as f:
-    model = pickle.load(f)
+model = joblib.load("/opt/static/model_rf.joblib")
 
 class Input(BaseModel):
-    age_group: str
-    reported_race_ethnicity: str
-    previous_births: str
-    tobacco_use_during_pregnancy: str
-    adequate_prenatal_care: str
+    age: int
+    no_of_pregnancy: int
+    gestation_in_previous_pregnancy: int
+    bmi: float
+    hdl: float
+    family_history: int
+    unexplained_prenetal_loss: int
+    large_child_or_birth_default: int
+    pcos: int
+    sys_bp: float
+    dia_bp: int
+    ogtt: float
+    hemoglobin: float
+    sedentary_lifestyle: int
+    prediabetes: int
 
 app = FastAPI()
  
@@ -30,7 +39,7 @@ async def predict(data: Input):
         response[key] = [value]
     prediction = model.predict(pd.DataFrame(response,index=[0]))
     if prediction[0] == 0:
-        return "Full-term"
+        return "No GDM"
     else:
-        return "Pre-term"
+        return "GDM Predicted!"
 
