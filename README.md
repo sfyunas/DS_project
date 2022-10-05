@@ -1,27 +1,34 @@
-# ML take home template
+# Gestational Diabetes Mellitus (GDM) predictor
 
-[![YourActionName Actions Status](https://github.com/nathansutton/ml-api-template/workflows/CI/badge.svg)](https://github.com/nathansutton/ml-api-template/actions)
+## Introduction
 
-The purpose of this repository is to provide a quick-start for a machine learning take home problem.  They usually are framed like the following.
-1. Here is some data and instructions  
-2. Build a model for us using a Jupyter notebook  
-3. Send us the notebook and/or some slides and we'll talk about it  
+Gestational Diabetes Mellitus (GDM) is a diabetic condition, in which a harmone produced by placenta prevents the body from using insulin effectively. Resultantly, the glucose starts accumulating in the blood stream instead of being absorbed by the cells.
 
-Years ago when we gave this problem to a candidate he went further to actually deploy a little model inside a web application.  We all really appreciated his desire to take a vision end to end, and this repo is meant to give a similar flavor.
+Gestational diabetes is for the first time diagnosed during pregnancy (gestation). If left untreated, it can affect the pregnancy and cause problems in baby's health, such as macrosomia (fat baby), premature birth or even still birth.
 
-With this repository you can be sure that you work is reproduced by a hiring committee because it's dockerized!  In my experience it pays dividends to actually walk through a notebook instead of just looking at the output.
+Gestational diabetes usually goes away after the baby is born, however, in some cases it may continue even after delivery as type II diabetes.
+
+Proper management/treatment of gestational diabetes can significantly reduce risk factors associated with it. Hence, early diagnosis of the GDM can helpful in this regards. 
+
+This GDM predictor is a web-based application that can help in prediction of gestational diabetes. It asks for several key information that corresponds to the risk factors associated with GDM. The input are passed to a machine learning model, which outputs either 'GDM predicted' or 'No GDM'. It uses Random Forest classifier for prediction. The application is dockerized.
+
+## Use case
+
+The web-based application when deployed on cloud can prove to be very helpful especially in the developing countries where majority of the population lives in rural areas and do not have access to proper hospitals. For instance, the web-based application can be used by public health workers in order to timely predict GDM in high risk pregnant females and hence refer them for proper medical care.
+
 
 ## Data
 
-This template includes an example dataset that I created based on iteratively querying the [New Jersey State Health Assessment Data](https://www-doh.state.nj.us/doh-shad/query/builder/birth/PretermAllCnty/Preterm.html), and these data are also available as an extract on [Kaggle](https://www.kaggle.com/datasets/natesutton/njpretermbirths).  Full caveats there is virtually no signal in this data to predict premature birth outcomes, it is merely meant to illustrate a problem.
+The dataset used for training the model is available on Kaggle and can be accessed here: https://www.kaggle.com/datasets/sumathisanthosh/gestational-diabetes-mellitus-gdm-data-set/code. The dataset is stored in a postgres relational database.
 
 ## Services
 
-This repository exposes four components that are useful in a data science proof of concept.
-- A container running Jupyter notebooks with common machine learning libraries (available @ localhost:8888).  Any notebooks will persist in a mounted volume (./volumes/notebooks)
+The project repository has four components:
+
+- A container running Jupyter notebooks with common machine learning libraries (available @ localhost:8888).  The notebook persists in a mounted volume (./volumes/notebooks)
 - A container running Postgres in the event a relational database is useful (available @ localhost:5432).  Any transformations will persist between containers in a mounted volume (./volumes/postgres)
-- A container running FastAPI to serve predictions from a scikit-learn model (available @ localhost:8080)
-- A container running Streamlit allows a user to access the predictions from their scikit-learn model based on user inputs (available at localhost:8501)
+- A container running FastAPI to serve predictions from the ML model (available @ localhost:8080)
+- A container running Streamlit to access the predictions from the ML model based on user inputs (available at localhost:8501)
 
 ## Usage
 
