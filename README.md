@@ -61,50 +61,7 @@ docker-compose down
 |   |-- static      # static files that are loaded into postgres or jupyter
 ```
 
-## Database connectivity
-
-There are several secrets pertaining to the postgres datbasse stored in the .env file at the root of the repository.
-
-```
-PGHOST=postgres
-PGUSER=local
-PGPASSWORD=password
-PGPORT=5432
-PGDATABASE=postgres
-```
-
-You can connect to PostgreSQL on localhost:5432 with a user 'local' and password 'password' with any SQL client.
-
-Inside the dockerized jupyter notebook, you can connect to PostgreSQL with the following URI
-
-```
-from sqlalchemy import create_engine 
-engine = create_engine('postgresql://local:password@postgres:5432/postgres)
-connection = engine.connect()
-```
-
-## Package Manager
-
-This template uses conda environments in each container.  Simply modify the environment.yml to add anything you like.
-
-## REST API Endpoint
-
-The model is available as a REST API endpoint on port 8080.  It accepts JSON data that look like 1 row of the dataframe it as trained on. 
-```
-curl --request POST http://127.0.0.1:8080/predict \
-    -H 'Content-Type: application/json' \
-    -d '{"age_group": "Under 15 yrs","reported_race_ethnicity": "White, non-Hispanic", "previous_births": "None","tobacco_use_during_pregnancy": "Yes","adequate_prenatal_care": "Inadequate"}'
-```
 
 ## Streamlit User Interface
 
-![](./resources/streamlit.png)  
-
-A small web application can take features used to drive your model, then return a prediction from the REST API.   
-
-## Known Vulnerabilities
-There is literally zero security.  Keep this on localhost.
-- There is no password for the postgres database.
-- The rest API calls are not encrypted.
-- The jupyter notebook runs as root in a container.
-- The user interface is exposed without encryption or a password.
+![](./resources/streamlit.png)
