@@ -1,4 +1,4 @@
-# Gestational Diabetes Mellitus (GDM) predictor
+# Gestational Diabetes Risk Stratification
 
 ## Introduction
 
